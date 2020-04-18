@@ -61,7 +61,10 @@
         "build:lib": "yarn run babel:lib",
         "clean": "yarn run clean:lib",
         "clean:lib": "rimraf ./lib",
+        "coverage": "nyc yarn run test",
         "prepack": "yarn run build",
+        "test": "mocha \"./lib/__tests__/*.test.js\"",
+        "test:quick": "yarn run build:lib && yarn run test",
         "uninstall": "yarn run clean && rimraf ./node_modules"
     },
     "devDependencies": {
@@ -69,8 +72,13 @@
         "@babel/core": "^7.9.0",
         "@babel/preset-env": "^7.9.5",
         "@comandeer/babel-plugin-banner": "^5.0.0",
+        "@types/chai": "^4.2.11",
+        "@types/mocha": "^7.0.2",
+        "chai": "^4.2.0",
         "cross-env": "^7.0.2",
         "husky": "^4.2.5",
+        "mocha": "^7.1.1",
+        "nyc": "^15.0.1",
         "rimraf": "^3.0.2"
     }
 }
