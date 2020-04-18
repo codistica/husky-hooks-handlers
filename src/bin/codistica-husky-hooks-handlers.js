@@ -7,15 +7,15 @@
 
     switch (scriptName) {
         case 'commit-msg':
-            import('../scripts/commit-msg.js');
+            await import('../scripts/commit-msg.js');
             break;
 
         case 'pre-commit':
-            import('../scripts/pre-commit.js');
+            await import('../scripts/pre-commit.js');
             break;
 
         case 'pre-push':
-            import('../scripts/pre-push.js');
+            await import('../scripts/pre-push.js');
             break;
 
         default:

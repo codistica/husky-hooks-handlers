@@ -1,6 +1,6 @@
-import {yarnRun} from './internals/yarn-run.js';
+import {runCmd} from '../modules/run-cmd.js';
 
 (async () => {
-    await yarnRun('prettify');
-    await yarnRun('test:quick');
+    await runCmd('yarn run prettify');
+    await runCmd('yarn run test:quick');
 })();

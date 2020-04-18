@@ -2,17 +2,18 @@ import {spawn} from 'child_process';
 
 /**
  * @async
- * @description Programmatically run yarn scripts from current working directory.
- * @param {string} scriptName - Yarn script to be ran.
+ * @description Programmatically run commands from current working directory.
+ * @param {string} cmd - Command string to be ran.
  * @returns {Promise<void>} Promise. Void.
  */
-async function yarnRun(scriptName) {
-    const yarnTestQuickExec = {
-        cmd: 'yarn',
-        args: ['run', scriptName]
+async function runCmd(cmd) {
+    const cmdArr = cmd.split(' ');
+    const cmdObj = {
+        cmd: cmdArr[0],
+        args: cmdArr.slice(1)
     };
     await new Promise((resolve, reject) => {
-        spawn(yarnTestQuickExec.cmd, yarnTestQuickExec.args, {
+        spawn(cmdObj.cmd, cmdObj.args, {
             cwd: process.cwd(),
             stdio: ['inherit', 'inherit', 'inherit'],
             shell: process.platform === 'win32'
@@ -25,4 +26,4 @@ async function yarnRun(scriptName) {
     });
 }
 
-export {yarnRun};
+export {runCmd};
