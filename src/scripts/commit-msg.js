@@ -3,9 +3,11 @@ import {getValidPackageNames} from '../modules/get-valid-package-names.js';
 import {validateCommit} from '../modules/validate-commit.js';
 
 const COMMIT_MSG_FILE = process.env.HUSKY_GIT_PARAMS;
-const VALID_PACKAGE_NAMES = [];
 
 (async () => {
+
+    let validPackageNames = [];
+
     const commit = await new Promise((resolve, reject) => {
         readFile(COMMIT_MSG_FILE, 'utf8', (err, data) => {
             if (err) {
@@ -13,10 +15,15 @@ const VALID_PACKAGE_NAMES = [];
             }
             resolve(data);
         });
+    }).catch((err) => {
+        throw err;
     });
 
     if (process.argv[3]) {
-        (await getValidPackageNames(process.argv[3])).forEach((packageName) => VALID_PACKAGE_NAMES.push(packageName));
+        validPackageNames = await getValidPackageNames(process.argv[3]);
+        if (validPackageNames === null) {
+            throw new Error('CANNOT READ PACKAGE NAMES.');
+        }
     }
 
     await new Promise((resolve, reject) => {
@@ -31,12 +38,14 @@ const VALID_PACKAGE_NAMES = [];
                 '[REFACTOR]',
                 '[TESTS]'
             ],
-            validPackageNames: VALID_PACKAGE_NAMES
+            validPackageNames
         }), (err) => {
             if (err) {
                 reject(err);
             }
             resolve();
         });
+    }).catch((err) => {
+        throw err;
     });
 })();
