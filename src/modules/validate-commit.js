@@ -5,16 +5,17 @@ import {validateCommitPackageNameTag} from './validate-commit-package-name-tag.j
 /**
  * @typedef validateCommitMessageOptionsType
  * @property {number} [maxLength=72] - Commit max length.
- * @property {Array<string>} validTypes - Valid tags array.
+ * @property {Array<string>} [validTypes=[]] - Valid tags array.
  * @property {Array<string>} [validPackageNames=[]] - Valid package name array.
  */
 
 /**
  * @description Validates commit message.
  * @param {string} commitMsg - Input string.
- * @param {validateCommitMessageOptionsType} options - Validation options.
+ * @param {validateCommitMessageOptionsType} [options] - Validation options.
  * @returns {string} Validated commit message.
  * @throws {TypeError} If invalid input.
+ * @throws {SyntaxError} If no type tag is found.
  * @throws {SyntaxError} If no package name tag is found.
  * @throws {SyntaxError} If invalid commit length.
  */
@@ -37,7 +38,14 @@ function validateCommit(commitMsg, options) {
 
     const parsedCommitMsg = parseCommit(commitMsg);
 
-    let finalCommitMsg = validateCommitTypeTag(parsedCommitMsg.tags[0], options.validTypes);
+    let finalCommitMsg = '';
+
+    if (options.validTypes.length) {
+        if (!parsedCommitMsg.tags[0]) {
+            throw new SyntaxError('NO TYPE TAG FOUND.');
+        }
+        finalCommitMsg += ' ' + validateCommitTypeTag(parsedCommitMsg.tags[0], options.validTypes);
+    }
 
     if (options.validPackageNames.length) {
         if (!parsedCommitMsg.tags[1]) {
@@ -46,7 +54,13 @@ function validateCommit(commitMsg, options) {
         finalCommitMsg += ' ' + validateCommitPackageNameTag(parsedCommitMsg.tags[1], options.validPackageNames);
     }
 
+    if (options.validTypes.length || options.validPackageNames.length) {
+        finalCommitMsg += ' -';
+    }
+
     finalCommitMsg += ' ' + parsedCommitMsg.description;
+
+    finalCommitMsg = finalCommitMsg.trim();
 
     if (finalCommitMsg.length >= options.maxLength) {
         throw new SyntaxError('COMMIT MAX LENGTH IS ' + options.maxLength + '.');
