@@ -1,6 +1,9 @@
 import {runCmd} from '../modules/run-cmd.js';
 
+const scripts = process.argv.slice(3);
+
 (async () => {
-    await runCmd('yarn run prettify');
-    await runCmd('yarn run test:quick');
+    for (const script of scripts) {
+        await runCmd('yarn run ' + script);
+    }
 })();
