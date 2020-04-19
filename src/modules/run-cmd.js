@@ -19,7 +19,7 @@ async function runCmd(cmd) {
             shell: process.platform === 'win32'
         }).on('exit', (exitCode) => {
             if (exitCode !== 0) {
-                reject(new Error('SCRIPT EXECUTION FAILED'));
+                reject(new Error('COMMAND EXECUTION FAILED'));
             }
             resolve();
         });

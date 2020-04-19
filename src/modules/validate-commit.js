@@ -20,7 +20,7 @@ import {validateCommitPackageNameTag} from './validate-commit-package-name-tag.j
  */
 function validateCommit(commitMsg, options) {
     if (typeof commitMsg !== 'string') {
-        throw new TypeError('INVALID INPUT TYPE');
+        throw new TypeError('INVALID INPUT TYPE.');
     }
 
     if (options) {
@@ -41,7 +41,7 @@ function validateCommit(commitMsg, options) {
 
     if (options.validPackageNames.length) {
         if (!parsedCommitMsg.tags[1]) {
-            throw new SyntaxError('NO PACKAGE NAME TAG FOUND');
+            throw new SyntaxError('NO PACKAGE NAME TAG FOUND.');
         }
         finalCommitMsg += ' ' + validateCommitPackageNameTag(parsedCommitMsg.tags[1], options.validPackageNames);
     }
@@ -49,7 +49,7 @@ function validateCommit(commitMsg, options) {
     finalCommitMsg += ' ' + parsedCommitMsg.description;
 
     if (finalCommitMsg.length >= options.maxLength) {
-        throw new SyntaxError('COMMIT MAX LENGTH IS ' + options.maxLength);
+        throw new SyntaxError('COMMIT MAX LENGTH IS ' + options.maxLength + '.');
     }
 
     return finalCommitMsg;

@@ -10,7 +10,7 @@ function validateCommitTypeTag(input, validTypes) {
     if (validTypes.some((currentTag) => currentTag === foundType)) {
         return foundType;
     } else {
-        throw new SyntaxError('INVALID TYPE');
+        throw new SyntaxError('INVALID TYPE.');
     }
 }
 

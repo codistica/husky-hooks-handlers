@@ -10,7 +10,7 @@ function validateCommitPackageNameTag(input, validPackageNames) {
     if (validPackageNames.some((currentName) => currentName === foundName)) {
         return foundName;
     }
-    throw new SyntaxError('INVALID PACKAGE NAME');
+    throw new SyntaxError('INVALID PACKAGE NAME.');
 }
 
 export {validateCommitPackageNameTag};
