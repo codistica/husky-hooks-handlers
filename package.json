@@ -32,9 +32,7 @@
         "test": "./lib/__tests__"
     },
     "files": [
-        "dist",
         "lib",
-        "lib-es",
         "!**/__tests__",
         "!*.test.*",
         "./types"
