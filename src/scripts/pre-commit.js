@@ -6,4 +6,6 @@ const scripts = process.argv.slice(3);
     for (const script of scripts) {
         await runCmd('yarn run ' + script);
     }
-})();
+})().catch(() => {
+    process.exitCode = 1;
+});

@@ -15,8 +15,6 @@ const COMMIT_MSG_FILE = process.env.HUSKY_GIT_PARAMS;
             }
             resolve(data);
         });
-    }).catch((err) => {
-        throw err;
     });
 
     if (process.argv[3]) {
@@ -45,7 +43,7 @@ const COMMIT_MSG_FILE = process.env.HUSKY_GIT_PARAMS;
             }
             resolve();
         });
-    }).catch((err) => {
-        throw err;
     });
-})();
+})().catch(() => {
+    process.exitCode = 1;
+});
